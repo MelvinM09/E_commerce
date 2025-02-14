@@ -18,11 +18,12 @@ export const MainCarousel = () => {
         <div className="carousel-container">
             <AliceCarousel
                 items={items}
-                disableButtonsControls
                 autoPlay
-                autoPlayInterval={3000} // Adjust autoplay interval as needed
+                autoPlayInterval={3000}
                 infinite
                 mouseTracking
+                disableDotsControls={false} // Ensure dots are enabled
+                disableButtonsControls={true} // Hide left/right navigation buttons
             />
         </div>
     );
