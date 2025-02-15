@@ -21,7 +21,7 @@ const HomeSectionCarousel = () => {
                     autoPlay
                     autoPlayInterval={3000}
                     infinite // Uncommented for infinite looping
-                    disableButtonControls
+                    disableButtonsControls
                     responsive={responsive}
                 />
                 {/* Next Button */}
@@ -33,15 +33,35 @@ const HomeSectionCarousel = () => {
                         right: '1rem',
                         transform: 'translateY(-50%)', // Center vertically
                         zIndex: 50,
-                        backgroundColor: 'black', // Example background color
+                        backgroundColor: 'lightblue', // Example background color
                         '&:hover': {
-                            backgroundColor: 'darkgray', // Hover effect
+                            backgroundColor: 'blue', // Hover effect
                         },
                     }}
                     aria-label="next"
                 >
-                    <KeyboardArrowRightIcon />
+<KeyboardArrowRightIcon sx={{transform:"Rotateccw(90deg)",color:"black"}}/>
                 </Button>
+
+                <Button
+                    variant="contained"
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '1rem',
+                        transform: 'translateY(-50%) rotate(-180deg)',  // Center vertically
+                        zIndex: 50,
+                        backgroundColor: 'lightblue', // Example background color
+                        
+                        '&:hover': {
+                            backgroundColor: 'blue', // Hover effect
+                        },
+                    }}
+                    aria-label="next"
+                >
+<KeyboardArrowRightIcon sx={{transform:"Rotateccw(90deg)",color:"black"}}/>
+                </Button>
+
             </div>
         </div>
     );
