@@ -1,11 +1,11 @@
-import React from 'react';
-import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
-import AliceCarousel from 'react-alice-carousel';
-import { Button } from '@mui/material';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { mens_kurta } from '../../../Data/mens_kurta';
+import React from 'react'; // Import React explicitly if required by ESLint
+import HomeSectionCard from '../HomeSectionCard/HomeSectionCard'; // Import HomeSectionCard
+import AliceCarousel from 'react-alice-carousel'; // Import AliceCarousel
+import { Button } from '@mui/material'; // Import Button from Material-UI
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'; // Import KeyboardArrowRightIcon
+import { mens_kurta } from '../../../Data/mens_kurta'; // Import mens_kurta data
 
-const HomeSectionCarousel = () => {
+const HomeSectionCarousel = ({ data, sectionName }) => {
     const [activeIndex, setActiveIndex] = React.useState(0);
 
     // Responsive settings for the carousel
@@ -52,7 +52,7 @@ const HomeSectionCarousel = () => {
     };
 
     // Map data to carousel items
-    const items = mens_kurta.slice(0, 10).map((item, index) => (
+    const items = mens_kurta.map((item, index) => (
         <HomeSectionCard
             key={index}
             product={item}
@@ -61,8 +61,14 @@ const HomeSectionCarousel = () => {
     ));
 
     return (
-        <div className="relative px-4 lg:px-8 border">
-            <div className="relative p-5">
+        <div className="relative px-4 lg:px-8">
+            {/* Section Name */}
+            <h2 className="text-2xl font-extrabold text-gray-800 py-4 text-center lg:text-left">
+                {sectionName}
+            </h2>
+
+            {/* Carousel Container */}
+            <div className="relative p-5 border w-full">
                 {/* Carousel Component */}
                 <AliceCarousel
                     key={activeIndex} // Force re-render when activeIndex changes
