@@ -1,9 +1,9 @@
-import React from 'react'; // Import React explicitly if required by ESLint
-import HomeSectionCard from '../HomeSectionCard/HomeSectionCard'; // Import HomeSectionCard
-import AliceCarousel from 'react-alice-carousel'; // Import AliceCarousel
-import { Button } from '@mui/material'; // Import Button from Material-UI
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'; // Import KeyboardArrowRightIcon
-import { mens_kurta } from '../../../Data/mens_kurta'; // Import mens_kurta data
+import React from 'react';
+import PropTypes from 'prop-types';
+import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
+import AliceCarousel from 'react-alice-carousel';
+import { Button } from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const HomeSectionCarousel = ({ data, sectionName }) => {
     const [activeIndex, setActiveIndex] = React.useState(0);
@@ -25,19 +25,17 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
     // Helper function to calculate the maximum allowed activeIndex
     const getMaxIndex = () => {
         const visibleItems = getVisibleItems();
-        return Math.max(0, mens_kurta.length - visibleItems);
+        return Math.max(0, data.length - visibleItems);
     };
 
     const slidePrev = () => {
         const newIndex = Math.max(activeIndex - 1, 0);
-        console.log('Sliding Previous, new index:', newIndex);
         setActiveIndex(newIndex);
     };
 
     const slideNext = () => {
         const maxIndex = getMaxIndex();
         const newIndex = Math.min(activeIndex + 1, maxIndex);
-        console.log('Sliding Next, new index:', newIndex);
         setActiveIndex(newIndex);
     };
 
@@ -52,13 +50,25 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
     };
 
     // Map data to carousel items
-    const items = mens_kurta.map((item, index) => (
+    const items = data.map((item) => (
         <HomeSectionCard
-            key={index}
+            key={item.id}
             product={item}
             onClick={() => handleCardClick(item)}
         />
     ));
+
+    // Button styles
+    const buttonStyles = {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        zIndex: 50,
+        backgroundColor: 'rgba(82, 82, 84, 0.41)',
+        '&:hover': {
+            backgroundColor: 'rgba(159, 156, 158, 0.69)',
+        },
+    };
 
     return (
         <div className="relative px-4 lg:px-8">
@@ -66,12 +76,11 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
             <h2 className="text-2xl font-extrabold text-gray-800 py-4 text-center lg:text-left">
                 {sectionName}
             </h2>
-
             {/* Carousel Container */}
             <div className="relative p-5 border w-full">
                 {/* Carousel Component */}
                 <AliceCarousel
-                    key={activeIndex} // Force re-render when activeIndex changes
+                    key={activeIndex}
                     items={items}
                     responsive={responsive}
                     disableButtonsControls
@@ -80,44 +89,29 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
                     activeIndex={activeIndex}
                     animationType="fadeout"
                 />
-
                 {/* Next Button */}
                 {activeIndex < getMaxIndex() && (
                     <Button
                         variant="contained"
                         onClick={slideNext}
                         sx={{
-                            position: 'absolute',
-                            top: '50%',
+                            ...buttonStyles,
                             right: '1rem',
-                            transform: 'translateY(-50%)',
-                            zIndex: 50,
-                            backgroundColor: 'rgba(82, 82, 84, 0.41)',
-                            '&:hover': {
-                                backgroundColor: 'rgba(159, 156, 158, 0.69)',
-                            },
                         }}
                         aria-label="next"
                     >
                         <KeyboardArrowRightIcon sx={{ color: "black" }} />
                     </Button>
                 )}
-
                 {/* Previous Button */}
                 {activeIndex > 0 && (
                     <Button
                         variant="contained"
                         onClick={slidePrev}
                         sx={{
-                            position: 'absolute',
-                            top: '50%',
+                            ...buttonStyles,
                             left: '1rem',
                             transform: 'translateY(-50%) rotate(180deg)',
-                            zIndex: 50,
-                            backgroundColor: 'rgba(82, 82, 84, 0.41)',
-                            '&:hover': {
-                                backgroundColor: 'rgba(159, 156, 158, 0.69)',
-                            },
                         }}
                         aria-label="previous"
                     >
@@ -127,6 +121,19 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
             </div>
         </div>
     );
+};
+
+// PropTypes for type checking
+HomeSectionCarousel.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            price: PropTypes.number.isRequired,
+            image: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    sectionName: PropTypes.string.isRequired,
 };
 
 export default HomeSectionCarousel;
