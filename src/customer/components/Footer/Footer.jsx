@@ -75,6 +75,21 @@ const Footer = () => {
 
         
       </Grid>
+      <Grid className="pt-20" item xs={12}>
+        <Typography variant="body2" component="p" align="center">
+            &copy; 2025 This is Melvin's Company. All Rights are reserved.
+        </Typography>
+        <Typography>
+            Please stay away, Visitors will be Shot, Survivors will be SHOT again.
+        </Typography>
+        <Typography>
+            Contact:7676802719
+        </Typography>
+        <Typography>
+        Email:melvinm1391@gmail.com
+        </Typography>
+
+      </Grid>
     </Grid>
   );
 };
